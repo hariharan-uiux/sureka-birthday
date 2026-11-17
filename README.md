@@ -44,9 +44,32 @@ A warm, cozy, self-contained single-document interactive birthday gift website c
 9. **10 Reasons Why You're My Favorite Panda**:
    - Interactive reasons card deck highlighting her smile, courage, and unique personality.
 
-10. **Built-in Music Player & MP3 Uploader**:
-    - Embedded procedural romantic lullaby synthesizer (Web Audio API) that plays without needing any audio files.
-    - Custom MP3 upload button to load her favorite song directly into the player.
+10. **Music: bundled default song, MP3 uploader, synth fallback**:
+    - Drop her song in once and it becomes the default track — see **Default song** below.
+    - Procedural romantic lullaby synthesizer (Web Audio API) still plays if no song is bundled.
+    - Custom MP3 upload button to load any song into the player on the spot.
+
+---
+
+## 🎵 Default song
+
+The player starts with a real song automatically when one is present. Two ways to set it:
+
+**A. Bake it into the single file (best for sharing)**
+
+```bash
+node tools/embed-music.mjs "/home/hari/Downloads/our-song.mp3"
+```
+
+The audio is base64-encoded into the `default-song-data` slot of `index.html`, so the page plays it with no extra files — exactly what you want when sending one document over WhatsApp or email. Clear it with `node tools/embed-music.mjs --clear`.
+
+**B. Keep the song as a separate file**
+
+Put `music.mp3` (or `music.m4a`, `music.wav`, `song.mp3`, `our-song.mp3`) in the same folder as `index.html`. The page picks it up automatically and titles it from the filename, e.g. `kannana-kanne.mp3` shows as *Kannana Kanne*. Sharing now means sending both files together, so option A is better for gifts.
+
+Clicking the 📁 button in the top-right dock still overrides the default for that session.
+
+Browsers block audible autoplay until someone interacts, so the song starts on the first tap, click, or scroll — not silently in the background.
 
 ---
 

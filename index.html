@@ -1669,8 +1669,16 @@
        - Quiz State Engine
        - Local Photo Storage / Replacement Engine
        ========================================================================== -->
+  <!-- ==========================================================================
+       DEFAULT SONG SLOT
+       Put a base64 audio file in here to bake a song into this single document.
+       Run: node tools/embed-music.mjs "/path/to/song.mp3"
+       Empty slot => the page looks for music.mp3 next to this file, then falls
+       back to the built-in cozy chords.
+       ========================================================================== -->
+  <script id="default-song-data" type="text/plain" data-mime="audio/mpeg"></script>
+
   <script>
-    // Smooth scroll helper
     function scrollToSection(id) {
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -1734,6 +1742,84 @@
     let isSynthPlaying = false;
     let synthTimer = null;
     let customAudioElement = null;
+    let customTrackLabel = 'your song';
+    const DEFAULT_TRACKS = ['music.mp3', 'music.m4a', 'music.wav', 'song.mp3', 'our-song.mp3'];
+
+    // A baked-in song wins over a sibling file: it keeps the gift one document.
+    function embeddedTrackSource() {
+      const slot = document.getElementById('default-song-data');
+      if (!slot) return null;
+      const base64 = slot.textContent.replace(/\s+/g, '');
+      if (base64.length < 1000) return null;
+      return 'data:' + (slot.dataset.mime || 'audio/mpeg') + ';base64,' + base64;
+    }
+
+    function prettyTrackName(source) {
+      const raw = decodeURIComponent(source.split('/').pop().split('?')[0]);
+      const bare = raw.replace(/\.[a-z0-9]+$/i, '').replace(/[-_]+/g, ' ').trim();
+      if (!bare || /^(music|song|audio|track)$/i.test(bare)) return 'Our Song';
+      return bare.replace(/\b\w/g, (c) => c.toUpperCase());
+    }
+
+    function probeTrack(source) {
+      return new Promise((resolve) => {
+        const probe = new Audio();
+        let settled = false;
+        const done = (ok) => {
+          if (settled) return;
+          settled = true;
+          resolve(ok ? probe : null);
+        };
+        probe.preload = 'metadata';
+        probe.addEventListener('loadedmetadata', () => done(true), { once: true });
+        probe.addEventListener('error', () => done(false), { once: true });
+        setTimeout(() => done(false), 1500);
+        probe.src = source;
+      });
+    }
+
+    function installDefaultTrack(track, label) {
+      customAudioElement = track;
+      customAudioElement.loop = true;
+      customAudioElement.volume = 0.6;
+      customTrackLabel = label;
+      document.getElementById('song-title').innerText = label;
+      document.getElementById('song-status').innerText = 'Tap disc to play';
+      armAutoStart();
+    }
+
+    // Browsers block audible autoplay until a gesture, so start on the first one.
+    function armAutoStart() {
+      const start = () => {
+        window.removeEventListener('pointerdown', start);
+        window.removeEventListener('keydown', start);
+        window.removeEventListener('scroll', start);
+        if (!customAudioElement || !customAudioElement.paused) return;
+        customAudioElement.play().then(() => {
+          document.getElementById('vinyl-disc').classList.add('spinning');
+          document.getElementById('song-status').innerText = 'Playing ' + customTrackLabel;
+        }).catch(() => {});
+      };
+      window.addEventListener('pointerdown', start, { passive: true });
+      window.addEventListener('keydown', start, { passive: true });
+      window.addEventListener('scroll', start, { passive: true });
+    }
+
+    async function loadDefaultTrack() {
+      const embedded = embeddedTrackSource();
+      if (embedded) {
+        const track = await probeTrack(embedded);
+        if (track) installDefaultTrack(track, 'Our Song');
+        return;
+      }
+      for (const source of DEFAULT_TRACKS) {
+        const track = await probeTrack(source);
+        if (track) {
+          installDefaultTrack(track, prettyTrackName(source));
+          return;
+        }
+      }
+    }
 
     function getAudioContext() {
       if (!audioCtx) {
@@ -1806,7 +1892,7 @@
         if (customAudioElement.paused) {
           customAudioElement.play();
           disc.classList.add("spinning");
-          status.innerText = "Playing uploaded song";
+          status.innerText = "Playing " + customTrackLabel;
         } else {
           customAudioElement.pause();
           disc.classList.remove("spinning");
@@ -1841,14 +1927,18 @@
 
       customAudioElement = new Audio(url);
       customAudioElement.loop = true;
+      customTrackLabel = prettyTrackName(file.name);
       customAudioElement.play().then(() => {
         document.getElementById("vinyl-disc").classList.add("spinning");
-        document.getElementById("song-title").innerText = file.name.substring(0, 20) + (file.name.length > 20 ? "..." : "");
-        document.getElementById("song-status").innerText = "Playing custom song";
+        document.getElementById("song-title").innerText = customTrackLabel;
+        document.getElementById("song-status").innerText = "Playing " + customTrackLabel;
       }).catch(err => {
         console.error("Audio play error", err);
       });
     }
+
+    // Pick up the bundled default song (embedded slot or sibling music.mp3).
+    loadDefaultTrack();
 
     // ==========================================================================
     // 4. FLOATING BACKGROUND PARTICLE SYSTEM (Hearts, Stars, Glow Sparks)
