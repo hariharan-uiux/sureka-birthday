@@ -138,100 +138,65 @@
     /* ==========================================================================
        TOP AUDIO NAVIGATION & MEMORY BAR
        ========================================================================== */
-    .top-bar {
+    /* Bottom dock: song play/pause + celebrate */
+    .bottom-dock {
       position: fixed;
-      top: 24px;
-      right: 24px;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
       z-index: 100;
-      display: flex;
-      align-items: center;
-      gap: 12px;
     }
 
-    .audio-player-pill {
+    .dock-pill {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      background: rgba(29, 19, 16, 0.75);
+      gap: 8px;
+      padding: 8px;
+      background: rgba(29, 19, 16, 0.82);
       border: 1px solid var(--border-subtle);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      padding: 6px 16px 6px 8px;
       border-radius: 9999px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      transition: var(--transition-smooth);
-    }
-    .audio-player-pill:hover {
-      border-color: var(--border-focus);
-      transform: translateY(-1px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
-    .vinyl-disc {
-      width: 32px;
-      height: 32px;
+    .dock-btn {
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      background: radial-gradient(circle, var(--accent-ember) 18%, #1c1917 22%, #292524 45%, #1c1917 48%, #292524 72%, #1c1917 76%);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.15);
-      transition: transform 160ms var(--ease-out);
-    }
-    .vinyl-disc:active {
-      transform: scale(0.94);
-    }
-    .vinyl-disc.spinning {
-      animation: spinVinyl 3.6s linear infinite;
-    }
-    @keyframes spinVinyl {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .audio-text {
-      display: flex;
-      flex-direction: column;
-      text-align: left;
-    }
-    .audio-title {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-main);
-      letter-spacing: 0.02em;
-    }
-    .audio-status {
-      font-size: 10px;
-      color: var(--text-muted);
-      font-family: var(--font-sans);
-    }
-
-    .pill-btn-icon {
-      background: rgba(254, 215, 170, 0.08);
       border: 1px solid var(--border-subtle);
+      background: rgba(254, 215, 170, 0.08);
       color: var(--text-body);
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: var(--transition-smooth);
     }
-    .pill-btn-icon:hover {
+    .dock-btn:hover {
       background: rgba(254, 215, 170, 0.16);
       color: var(--text-main);
       border-color: var(--border-focus);
       transform: translateY(-1px);
     }
-    .pill-btn-icon:active {
+    .dock-btn:active {
       transform: scale(0.94);
     }
-
-    #audio-file-input {
-      display: none;
+    .dock-btn--music {
+      background: rgba(249, 115, 22, 0.14);
+      border-color: rgba(249, 115, 22, 0.32);
+      color: var(--accent-warm);
+    }
+    .dock-btn--music:hover {
+      background: rgba(249, 115, 22, 0.22);
+      color: var(--accent-ember);
+    }
+    .dock-btn:focus-visible {
+      outline: 2px solid var(--accent-warm);
+      outline-offset: 2px;
+    }
+    .dock-btn svg {
+      pointer-events: none;
     }
 
     /* ==========================================================================
@@ -943,7 +908,7 @@
        FOOTER
        ========================================================================== */
     .site-footer {
-      padding: 80px 0 60px;
+      padding: 80px 0 110px;
       text-align: center;
       border-top: 1px solid rgba(254, 215, 170, 0.08);
       margin-top: 60px;
@@ -984,6 +949,9 @@
       .letter-paper-inner {
         padding: 24px 20px;
       }
+      .bottom-dock {
+        bottom: 16px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -991,9 +959,6 @@
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
-      }
-      .vinyl-disc.spinning {
-        animation: none;
       }
     }
 
@@ -1103,29 +1068,22 @@
   <canvas class="glow-canvas" id="glow-canvas" aria-hidden="true"></canvas>
   <canvas id="confetti-canvas" aria-hidden="true"></canvas>
 
-  <!-- Top Controls: Music & Celebration -->
-  <nav class="top-bar" aria-label="Audio and celebration controls">
-    <div class="audio-player-pill" role="region" aria-label="Music Player">
-      <div class="vinyl-disc" id="vinyl-disc" onclick="toggleMusicPlayback()" title="Play / Pause Song">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+  <!-- Bottom Dock: Song Play/Pause & Celebration -->
+  <nav class="bottom-dock" aria-label="Music and celebration controls">
+    <div class="dock-pill">
+      <button type="button" class="dock-btn dock-btn--music" id="music-toggle" onclick="toggleMusicPlayback()" aria-label="Play song" aria-pressed="false" title="Play / Pause Song">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <polygon id="icon-play" points="8 5 19 12 8 19 8 5"></polygon>
+          <g id="icon-pause" style="display: none;">
+            <rect x="7" y="5" width="3.5" height="14" rx="1"></rect>
+            <rect x="13.5" y="5" width="3.5" height="14" rx="1"></rect>
+          </g>
         </svg>
-      </div>
-      <div class="audio-text">
-        <span class="audio-title" id="song-title">Cozy Lullaby</span>
-        <span class="audio-status" id="song-status">Tap disc to play</span>
-      </div>
-      <label for="audio-file-input" class="pill-btn-icon" title="Choose audio file from device">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 18V5l12-2v13"></path>
-          <circle cx="6" cy="18" r="3"></circle>
-          <circle cx="18" cy="16" r="3"></circle>
-        </svg>
-      </label>
-      <input type="file" id="audio-file-input" accept="audio/*" onchange="handleAudioUpload(event)">
-      <button type="button" class="pill-btn-icon" onclick="triggerCelebrationConfetti()" title="Celebrate">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+      </button>
+      <button type="button" class="dock-btn" onclick="triggerCelebrationConfetti()" aria-label="Celebrate" title="Celebrate">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M11 3l1.9 4.6L17.5 9.5l-4.6 1.9L11 16l-1.9-4.6L4.5 9.5l4.6-1.9z"></path>
+          <path d="M18 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"></path>
         </svg>
       </button>
     </div>
@@ -1704,8 +1662,7 @@ SUQzAwAAAAAAUVRJVDIAAAALAAAAQXZhbHVrZW5hAFRQRTEAAAAPAAAAUGVuZHVKYXR0LmRldgBUU1NF
     function startSynthLoop() {
       synthPlaying = true;
       activeTrackKind = 'synth';
-      document.getElementById("vinyl-disc").classList.add("spinning");
-      document.getElementById("song-status").innerText = "Playing cozy chords";
+      setNativeAudioUI(true);
       playChord(romanticChords[chordIndex % romanticChords.length], 4.2);
       chordIndex++;
 
@@ -1719,28 +1676,18 @@ SUQzAwAAAAAAUVRJVDIAAAALAAAAQXZhbHVrZW5hAFRQRTEAAAAPAAAAUGVuZHVKYXR0LmRldgBUU1NF
     function stopSynthLoop() {
       synthPlaying = false;
       if (synthInterval) clearInterval(synthInterval);
-      document.getElementById("vinyl-disc").classList.remove("spinning");
-      document.getElementById("song-status").innerText = "Paused";
+      setNativeAudioUI(false);
     }
 
     function setNativeAudioUI(playing) {
-      const disc = document.getElementById("vinyl-disc");
-      const status = document.getElementById("song-status");
-      if (playing) {
-        disc.classList.add("spinning");
-        status.innerText = "Playing";
-      } else {
-        disc.classList.remove("spinning");
-        status.innerText = "Paused";
-      }
-    }
-
-    function stopAllAudio() {
-      stopSynthLoop();
-      if (nativeAudio) {
-        nativeAudio.pause();
-        setNativeAudioUI(false);
-      }
+      const toggle = document.getElementById("music-toggle");
+      const playIcon = document.getElementById("icon-play");
+      const pauseIcon = document.getElementById("icon-pause");
+      if (!toggle || !playIcon || !pauseIcon) return;
+      toggle.setAttribute("aria-label", playing ? "Pause song" : "Play song");
+      toggle.setAttribute("aria-pressed", playing ? "true" : "false");
+      playIcon.style.display = playing ? "none" : "";
+      pauseIcon.style.display = playing ? "" : "none";
     }
 
     function toggleMusicPlayback() {
@@ -1759,21 +1706,6 @@ SUQzAwAAAAAAUVRJVDIAAAALAAAAQXZhbHVrZW5hAFRQRTEAAAAPAAAAUGVuZHVKYXR0LmRldgBUU1NF
       } else {
         startSynthLoop();
       }
-    }
-
-    function handleAudioUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      stopAllAudio();
-      const objectUrl = URL.createObjectURL(file);
-      nativeAudio = new Audio(objectUrl);
-      nativeAudio.loop = true;
-      nativeAudio.volume = 0.65;
-      activeTrackKind = 'native';
-
-      document.getElementById("song-title").innerText = file.name.replace(/\.[^/.]+$/, "");
-      nativeAudio.play().then(() => setNativeAudioUI(true)).catch(() => {});
     }
 
     // Default song detection and playback logic
@@ -1806,7 +1738,6 @@ SUQzAwAAAAAAUVRJVDIAAAALAAAAQXZhbHVrZW5hAFRQRTEAAAAPAAAAUGVuZHVKYXR0LmRldgBUU1NF
       nativeAudio.volume = 0.65;
       nativeAudio.preload = 'auto';
       activeTrackKind = 'native';
-      document.getElementById("song-title").innerText = title;
 
       const startMusic = () => {
         nativeAudio.play().then(() => setNativeAudioUI(true)).catch(() => {});
