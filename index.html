@@ -571,156 +571,7 @@
     }
 
     /* ==========================================================================
-       SECTION 5: MEMORY GALLERY (POLAROIDS)
-       ========================================================================== */
-    .polaroid-gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 28px;
-    }
-    .polaroid-frame {
-      background: #fdfbf7;
-      padding: 16px 16px 24px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
-      border-radius: 4px;
-      position: relative;
-      cursor: pointer;
-      transition: transform 240ms var(--ease-out), box-shadow 240ms ease;
-    }
-    .polaroid-frame:nth-child(odd) {
-      transform: rotate(-1.5deg);
-    }
-    .polaroid-frame:nth-child(even) {
-      transform: rotate(1.5deg);
-    }
-    .polaroid-frame:hover {
-      transform: scale(1.03) rotate(0deg);
-      box-shadow: 0 20px 45px rgba(0,0,0,0.8);
-      z-index: 10;
-    }
-    .polaroid-tape-strip {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 22px;
-      background: rgba(254, 243, 199, 0.45);
-      border: 1px dashed rgba(217, 119, 6, 0.3);
-      backdrop-filter: blur(2px);
-    }
-    .polaroid-photo-box {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      background: #231613;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    .polaroid-photo-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 300ms var(--ease-out);
-    }
-    .polaroid-frame:hover .polaroid-photo-box img {
-      transform: scale(1.03);
-    }
-    .polaroid-caption-text {
-      margin-top: 14px;
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 600;
-      color: #38241e;
-      text-align: center;
-    }
-    .polaroid-date-sub {
-      font-family: var(--font-sans);
-      font-size: 11px;
-      color: #78350f;
-      text-align: center;
-      display: block;
-      margin-top: 4px;
-    }
-    .polaroid-replace-btn {
-      margin-top: 10px;
-      font-size: 11px;
-      color: #92400e;
-      background: rgba(217, 119, 6, 0.12);
-      border: 1px solid rgba(217, 119, 6, 0.25);
-      padding: 4px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-      display: inline-block;
-      width: 100%;
-      text-align: center;
-      transition: background 150ms ease;
-    }
-    .polaroid-replace-btn:hover {
-      background: rgba(217, 119, 6, 0.25);
-      color: #78350f;
-    }
-
-    /* Lightbox Modal */
-    .lightbox-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(10, 6, 5, 0.92);
-      backdrop-filter: blur(12px);
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-    .lightbox-overlay.active {
-      display: flex;
-    }
-    .lightbox-content {
-      background: #fdfbf7;
-      padding: 20px 20px 32px;
-      max-width: 580px;
-      width: 100%;
-      border-radius: 6px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.8);
-      position: relative;
-    }
-    .lightbox-close-btn {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: #231613;
-      color: #fdfbf7;
-      border: none;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .lightbox-img-large {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      background: #1c120f;
-    }
-    .lightbox-caption-text {
-      margin-top: 16px;
-      font-family: var(--font-display);
-      font-size: 22px;
-      color: #38241e;
-      text-align: center;
-      font-weight: 600;
-    }
-
-    /* ==========================================================================
-       SECTION 6: INTERACTIVE SCRATCH-OFF GOLDEN PASS
+       SECTION 5: INTERACTIVE SCRATCH-OFF GOLDEN PASS
        ========================================================================== */
     .scratch-wrap {
       max-width: 520px;
@@ -778,7 +629,7 @@
     }
 
     /* ==========================================================================
-       SECTION 7: THE RELATIONSHIP QUIZ
+       SECTION 6: THE RELATIONSHIP QUIZ
        ========================================================================== */
     .quiz-card {
       max-width: 600px;
@@ -864,7 +715,7 @@
     }
 
     /* ==========================================================================
-       SECTION 8: 10 REASONS DECK
+       SECTION 7: 10 REASONS DECK
        ========================================================================== */
     .reasons-deck-grid {
       display: grid;
@@ -1142,9 +993,6 @@
           <button type="button" class="btn-handcrafted-ghost" onclick="scrollToSection('story')">
             Our Story
           </button>
-          <button type="button" class="btn-handcrafted-ghost" onclick="scrollToSection('gallery')">
-            Keepsakes
-          </button>
         </div>
 
       </div>
@@ -1290,97 +1138,7 @@
     </section>
 
     <!-- ======================================================================
-         5. POLAROID MEMORY WALL (WITH IN-BROWSER PHOTO REPLACEMENT)
-         ====================================================================== -->
-    <section class="gallery-section" id="gallery" style="padding: 40px 0 80px;">
-      <div class="container">
-        
-        <div class="section-title-wrap">
-          <span class="section-label">Moments Kept</span>
-          <h2 class="section-headline">Polaroid Wall</h2>
-          <p class="section-subhead">Tap any photo to view in high resolution, or upload your own real pictures.</p>
-        </div>
-
-        <div class="polaroid-gallery-grid">
-
-          <article class="polaroid-frame" onclick="openLightbox(0)">
-            <div class="polaroid-tape-strip"></div>
-            <div class="polaroid-photo-box">
-              <img id="img-0" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%23221512'/><circle cx='200' cy='180' r='60' fill='%23ea580c' opacity='0.25'/><text x='200' y='190' font-size='20' font-family='serif' fill='%23fef3c7' text-anchor='middle'>Chapter I</text><text x='200' y='225' font-size='13' font-family='sans-serif' fill='%23d4a373' text-anchor='middle'>Where Destiny Began</text></svg>" alt="The First Glance">
-            </div>
-            <div class="polaroid-caption-text">The First Glance</div>
-            <span class="polaroid-date-sub">The Event &middot; Day One</span>
-            <button type="button" class="polaroid-replace-btn" onclick="triggerPhotoReplace(event, 0)">Replace Photo</button>
-          </article>
-
-          <article class="polaroid-frame" onclick="openLightbox(1)">
-            <div class="polaroid-tape-strip"></div>
-            <div class="polaroid-photo-box">
-              <img id="img-1" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%23221512'/><circle cx='200' cy='180' r='60' fill='%23f43f5e' opacity='0.25'/><text x='200' y='190' font-size='20' font-family='serif' fill='%23fef3c7' text-anchor='middle'>Chennai Days</text><text x='200' y='225' font-size='13' font-family='sans-serif' fill='%23d4a373' text-anchor='middle'>Capgemini Chapter</text></svg>" alt="Chennai Days">
-            </div>
-            <div class="polaroid-caption-text">Her Ambition</div>
-            <span class="polaroid-date-sub">Chennai &middot; Capgemini</span>
-            <button type="button" class="polaroid-replace-btn" onclick="triggerPhotoReplace(event, 1)">Replace Photo</button>
-          </article>
-
-          <article class="polaroid-frame" onclick="openLightbox(2)">
-            <div class="polaroid-tape-strip"></div>
-            <div class="polaroid-photo-box">
-              <img id="img-2" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%23221512'/><circle cx='200' cy='180' r='60' fill='%23fbbf24' opacity='0.25'/><text x='200' y='190' font-size='20' font-family='serif' fill='%23fef3c7' text-anchor='middle'>1:00 AM</text><text x='200' y='225' font-size='13' font-family='sans-serif' fill='%23d4a373' text-anchor='middle'>June 8th Proposal</text></svg>" alt="1:00 AM Proposal">
-            </div>
-            <div class="polaroid-caption-text">The Proposal</div>
-            <span class="polaroid-date-sub">June 8 &middot; 1:00 AM</span>
-            <button type="button" class="polaroid-replace-btn" onclick="triggerPhotoReplace(event, 2)">Replace Photo</button>
-          </article>
-
-          <article class="polaroid-frame" onclick="openLightbox(3)">
-            <div class="polaroid-tape-strip"></div>
-            <div class="polaroid-photo-box">
-              <img id="img-3" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%23221512'/><circle cx='200' cy='180' r='60' fill='%23f43f5e' opacity='0.25'/><text x='200' y='190' font-size='20' font-family='serif' fill='%23fef3c7' text-anchor='middle'>Favorite Smiles</text><text x='200' y='225' font-size='13' font-family='sans-serif' fill='%23d4a373' text-anchor='middle'>Warmest Hugs</text></svg>" alt="Favorite Smiles">
-            </div>
-            <div class="polaroid-caption-text">Her Soft Smile</div>
-            <span class="polaroid-date-sub">Pure Joy &middot; Together</span>
-            <button type="button" class="polaroid-replace-btn" onclick="triggerPhotoReplace(event, 3)">Replace Photo</button>
-          </article>
-
-          <article class="polaroid-frame" onclick="openLightbox(4)">
-            <div class="polaroid-tape-strip"></div>
-            <div class="polaroid-photo-box">
-              <img id="img-4" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%23221512'/><circle cx='200' cy='180' r='60' fill='%23ea580c' opacity='0.25'/><text x='200' y='190' font-size='20' font-family='serif' fill='%23fef3c7' text-anchor='middle'>Late Night Calls</text><text x='200' y='225' font-size='13' font-family='sans-serif' fill='%23d4a373' text-anchor='middle'>Bridging the Distance</text></svg>" alt="Late Night Calls">
-            </div>
-            <div class="polaroid-caption-text">Late Night Conversations</div>
-            <span class="polaroid-date-sub">Every Night &middot; Always</span>
-            <button type="button" class="polaroid-replace-btn" onclick="triggerPhotoReplace(event, 4)">Replace Photo</button>
-          </article>
-
-          <article class="polaroid-frame" onclick="openLightbox(5)">
-            <div class="polaroid-tape-strip"></div>
-            <div class="polaroid-photo-box">
-              <img id="img-5" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><rect width='400' height='400' fill='%23221512'/><circle cx='200' cy='180' r='60' fill='%23fbbf24' opacity='0.25'/><text x='200' y='190' font-size='20' font-family='serif' fill='%23fef3c7' text-anchor='middle'>Happy Birthday</text><text x='200' y='225' font-size='13' font-family='sans-serif' fill='%23d4a373' text-anchor='middle'>To Many More</text></svg>" alt="Happy Birthday">
-            </div>
-            <div class="polaroid-caption-text">Birthday Celebration</div>
-            <span class="polaroid-date-sub">For Sureka &middot; Today</span>
-            <button type="button" class="polaroid-replace-btn" onclick="triggerPhotoReplace(event, 5)">Replace Photo</button>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- Hidden input for photo replacements -->
-    <input type="file" id="polaroid-input" accept="image/*" style="display: none;" onchange="handlePolaroidUpload(event)">
-
-    <!-- Lightbox Modal -->
-    <div class="lightbox-overlay" id="lightbox-modal" onclick="closeLightbox(event)">
-      <div class="lightbox-content" onclick="event.stopPropagation()">
-        <button type="button" class="lightbox-close-btn" onclick="closeLightbox(event)">&times;</button>
-        <img class="lightbox-img-large" id="lightbox-img" src="" alt="Memory preview">
-        <div class="lightbox-caption-text" id="lightbox-caption"></div>
-      </div>
-    </div>
-
-    <!-- ======================================================================
-         6. INTERACTIVE GOLDEN SCRATCH CARD
+         5. INTERACTIVE GOLDEN SCRATCH CARD
          ====================================================================== -->
     <section class="scratch-section" style="padding: 40px 0 80px;">
       <div class="container">
@@ -1407,7 +1165,7 @@
     </section>
 
     <!-- ======================================================================
-         7. RELATIONSHIP MEMORY QUIZ
+         6. RELATIONSHIP MEMORY QUIZ
          ====================================================================== -->
     <section class="quiz-section" id="quiz" style="padding: 40px 0 80px;">
       <div class="container">
@@ -1438,7 +1196,7 @@
     </section>
 
     <!-- ======================================================================
-         8. TEN REASONS WHY I LOVE MY PANDA
+         7. TEN REASONS WHY I LOVE MY PANDA
          ====================================================================== -->
     <section class="reasons-section" style="padding: 40px 0 80px;">
       <div class="container">
@@ -1516,7 +1274,7 @@
     </section>
 
     <!-- ======================================================================
-         9. FOOTER
+         8. FOOTER
          ====================================================================== -->
     <footer class="site-footer">
       <div class="container">
@@ -1538,7 +1296,7 @@ SUQzAwAAAAAAUVRJVDIAAAALAAAAQXZhbHVrZW5hAFRQRTEAAAAPAAAAUGVuZHVKYXR0LmRldgBUU1NF
 </script>
 
   <!-- ==========================================================================
-       SCRIPTS: AUDIO SYNTH, SCRATCH CARD, QUIZ, LIVE CLOCK, PHOTO PERSISTENCE
+       SCRIPTS: AUDIO SYNTH, SCRATCH CARD, QUIZ, LIVE CLOCK
        ========================================================================== -->
   <script>
     function scrollToSection(id) {
@@ -2055,72 +1813,6 @@ SUQzAwAAAAAAUVRJVDIAAAALAAAAQXZhbHVrZW5hAFRQRTEAAAAPAAAAUGVuZHVKYXR0LmRldgBUU1NF
       renderQuiz();
     }
     renderQuiz();
-
-    // ==========================================================================
-    // 8. POLAROID LIGHTBOX & PHOTO PERSISTENCE
-    // ==========================================================================
-    const polaroidCaptions = [
-      "The First Glance · Event Day",
-      "Her Ambition · Chennai & Capgemini",
-      "The Proposal · June 8th, 1:00 AM",
-      "Her Soft Smile · Pure Joy",
-      "Late Night Conversations · Every Day",
-      "Birthday Celebration · For Sureka"
-    ];
-
-    function openLightbox(idx) {
-      const img = document.getElementById(`img-${idx}`);
-      const modal = document.getElementById("lightbox-modal");
-      const modalImg = document.getElementById("lightbox-img");
-      const caption = document.getElementById("lightbox-caption");
-
-      modalImg.src = img.src;
-      caption.innerText = polaroidCaptions[idx];
-      modal.classList.add("active");
-    }
-
-    function closeLightbox(e) {
-      document.getElementById("lightbox-modal").classList.remove("active");
-    }
-
-    // Local Storage Photo Persistence
-    let targetReplaceIndex = null;
-    function triggerPhotoReplace(event, idx) {
-      event.stopPropagation();
-      targetReplaceIndex = idx;
-      document.getElementById("polaroid-input").click();
-    }
-
-    function handlePolaroidUpload(e) {
-      const file = e.target.files[0];
-      if (!file || targetReplaceIndex === null) return;
-
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        const base64 = evt.target.result;
-        const imgEl = document.getElementById(`img-${targetReplaceIndex}`);
-        if (imgEl) {
-          imgEl.src = base64;
-          try {
-            localStorage.setItem(`sureka_polaroid_${targetReplaceIndex}`, base64);
-          } catch(err) {}
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-
-    // Restore saved photos on page load
-    window.addEventListener("DOMContentLoaded", () => {
-      for (let i = 0; i < 6; i++) {
-        try {
-          const saved = localStorage.getItem(`sureka_polaroid_${i}`);
-          if (saved) {
-            const el = document.getElementById(`img-${i}`);
-            if (el) el.src = saved;
-          }
-        } catch(e) {}
-      }
-    });
 
     function triggerPandaGiggle() {
       playCuteChime();
