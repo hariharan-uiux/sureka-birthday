@@ -43,6 +43,7 @@ if (!slot.test(html)) {
 
 let payload = '';
 let mime = 'audio/mpeg';
+let title = '';
 
 if (arg !== '--clear') {
   const songPath = path.resolve(arg);
@@ -51,10 +52,17 @@ if (arg !== '--clear') {
     process.exit(1);
   }
   mime = MIME[path.extname(songPath).toLowerCase()] || 'audio/mpeg';
+  title = path
+    .basename(songPath, path.extname(songPath))
+    .replace(/pendujatt\.dev/gi, ' ')
+    .split(' - ')[0]
+    .replace(/[-_]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
   payload = fs.readFileSync(songPath).toString('base64');
 }
 
-const replacement = `<script id="default-song-data" type="text/plain" data-mime="${mime}">\n${payload}\n</script>`;
+const replacement = `<script id="default-song-data" type="text/plain" data-mime="${mime}" data-title="${title}">\n${payload}\n</script>`;
 fs.writeFileSync(htmlTarget, html.replace(slot, replacement));
 
 if (payload) {
